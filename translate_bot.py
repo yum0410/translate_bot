@@ -1,5 +1,6 @@
 from flask import Flask, request, abort
 import os
+from googletrans import Translator 
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -12,6 +13,7 @@ from linebot.models import (
 )
 
 app = Flask(__name__)
+translator = Translator()
 
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
@@ -43,9 +45,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    # ユーザから送られてきたメッセージ
+    user_text = event.message.text
+    translated = translator.translate(user_text, dest="ja")
+    translated_text = translated.text
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=translated_text))
 
 if __name__ == "__main__":
 #    app.run()
@@ -57,4 +63,15 @@ if __name__ == "__main__":
 """
 heroku config:set YOUR_CHANNEL_SECRET="912d09c8e56a29388bfd2f8ca723ee88" --app translater-bot-202011
 heroku config:set YOUR_CHANNEL_ACCESS_TOKEN="hFwz/Zpm4dPitmEGiQEe6067phDjC4i9u3hBvsHwFk/TLSZ5C9Hygj4E8ZL1I+P+pchR2KFUUwOvTu+kK2e+BlWeLT72/+wPjZ5q5LMiOmJQ4gtxRrGncEqcuL0ZovOdJugzDvXGPqj/8/aj5FsVhwdB04t89/1O/w1cDnyilFU=" --app translater-bot-202011
+
+git init
+git add requirements.txt translate_bot.py runtime.txt Procfile
+git commit -m "first commit"
+git push heroku master
+# herokuのリモートリポジトリを作成
+heroku git:remote -a translater-bot-202011
+git push heroku master
+
+# line_botのwebhoolの設定
+https://translater-bot-202011.herokuapp.com/callback
 """
