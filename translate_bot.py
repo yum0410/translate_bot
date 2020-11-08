@@ -46,13 +46,6 @@ def callback():
 
 def reply_example_context(event_token, word):
     # twitterから英単語の使用例をピックアップ
-    CK = 'PeiYuO3tpGyuufkhrmYTk64DL' # コンシューマーキー
-    CKS = 'fNCxf1l4czFfRfwTSaflPXHPn77VnvqfQFuvEJoiYUTq8ohCKx' # コンシューマーシークレット
-    AT = '1545825608-PSzllmzEUVMbSGBJHeerMxGKx3w6YeI2j6MsRSw' # アクセストークン
-    ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
-    count = 1
-    n = 1
-
     import requests
     from requests_oauthlib import OAuth1
     import urllib
@@ -102,16 +95,24 @@ def reply_example_context(event_token, word):
                 break
         return tweets
 
+    CK = 'PeiYuO3tpGyuufkhrmYTk64DL' # コンシューマーキー
+    CKS = 'fNCxf1l4czFfRfwTSaflPXHPn77VnvqfQFuvEJoiYUTq8ohCKx' # コンシューマーシークレット
+    AT = '1545825608-PSzllmzEUVMbSGBJHeerMxGKx3w6YeI2j6MsRSw' # アクセストークン
+    ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
+    count = 1
+    n = 1
+    print("=====call search_tweets")
     tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
     example_context = tweets[0]["text"]
-    line_bot_api.reply_message(
-        event_token,
-        TextSendMessage(text=example_context))
-    # 画像がある場合は画像もリプライ
-    if len(tweets[0]["image"]) > 0:
-        line_bot_api.reply_message(
-            event_token,
-            ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
+    return example_context
+    # line_bot_api.reply_message(
+    #     event_token,
+    #     TextSendMessage(text=example_context))
+    # # 画像がある場合は画像もリプライ
+    # if len(tweets[0]["image"]) > 0:
+    #     line_bot_api.reply_message(
+    #         event_token,
+    #         ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -119,10 +120,11 @@ def handle_message(event):
     user_text = event.message.text
     translated = translator.translate(user_text, dest="ja")
     translated_text = translated.text
+    example_context = reply_example_context(user_text)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=translated_text))
-    reply_example_context(event.reply_token, user_text)
+        TextSendMessage(text=translated_text),
+        TextSendMessage(text=example_context))
 
 if __name__ == "__main__":
 #    app.run()
@@ -140,4 +142,7 @@ git push heroku master
 
 # line_botのwebhoolの設定
 https://translater-bot-202011.herokuapp.com/callback
+
+# herokuのエラ-ログ確認
+heroku logs --tail 
 """
