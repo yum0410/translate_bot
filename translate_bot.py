@@ -85,7 +85,7 @@ def reply_example_context(word):
                     }         
                 tweets.append(_tweet)
             # 2回目以降のリクエスト
-            url = "https://api.twitter.com/1.1/search/tweets.json?lang=ja&q="+word+"&count="+str(count)+"&max_id="+str(maxid)
+            url = "https://api.twitter.com/1.1/search/tweets.json?lang=en&q="+word+"&count="+str(count)+"&max_id="+str(maxid)
             response = requests.get(url, auth=auth)
             try:
                 data = response.json()['statuses']
@@ -100,7 +100,6 @@ def reply_example_context(word):
     ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
     count = 1
     n = 1
-    print("=====call search_tweets")
     tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
     example_context = tweets[0]["text"]
     return example_context
