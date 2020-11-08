@@ -123,8 +123,8 @@ def handle_message(event):
     example_context = reply_example_context(user_text)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=translated_text),
-        TextSendMessage(text=example_context))
+        [TextSendMessage(text=translated_text),
+        TextSendMessage(text=example_context)])
 
 if __name__ == "__main__":
 #    app.run()
