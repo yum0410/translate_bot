@@ -121,6 +121,7 @@ def handle_message(event):
     translated = translator.translate(user_text, dest="ja")
     translated_text = translated.text
     example_context = reply_example_context(user_text)
+    print(translated_text, example_context)
     line_bot_api.reply_message(
         event.reply_token,
         [TextSendMessage(text=translated_text),
