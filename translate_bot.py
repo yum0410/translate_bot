@@ -52,7 +52,7 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=translated_text))
-    # reply_example_context(event.reply_token, user_text)
+    reply_example_context(event.reply_token, user_text)
 
 def reply_example_context(event_token, word):
     # twitterから英単語の使用例をピックアップ
