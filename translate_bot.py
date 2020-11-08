@@ -44,7 +44,7 @@ def callback():
     return 'OK'
 
 
-def reply_example_context(event_token, word):
+def reply_example_context(word):
     # twitterから英単語の使用例をピックアップ
     import requests
     from requests_oauthlib import OAuth1
