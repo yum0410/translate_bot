@@ -43,16 +43,6 @@ def callback():
 
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    # ユーザから送られてきたメッセージ
-    user_text = event.message.text
-    translated = translator.translate(user_text, dest="ja")
-    translated_text = translated.text
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=translated_text))
-    reply_example_context(event.reply_token, user_text)
 
 def reply_example_context(event_token, word):
     # twitterから英単語の使用例をピックアップ
@@ -122,6 +112,17 @@ def reply_example_context(event_token, word):
         line_bot_api.reply_message(
             event_token,
             ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    # ユーザから送られてきたメッセージ
+    user_text = event.message.text
+    translated = translator.translate(user_text, dest="ja")
+    translated_text = translated.text
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=translated_text))
+    reply_example_context(event.reply_token, user_text)
 
 if __name__ == "__main__":
 #    app.run()
