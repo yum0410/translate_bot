@@ -13,7 +13,6 @@ from linebot.models import (
 )
 
 app = Flask(__name__)
-translator = Translator()
 
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
@@ -118,8 +117,14 @@ def reply_example_context(word):
 def handle_message(event):
     # ユーザから送られてきたメッセージ
     user_text = event.message.text
-    translated = translator.translate(user_text, dest="ja")
-    translated_text = translated.text
+    print(user_text)
+    translator = Translator()
+    while True:
+        try:
+            translated_text = translator.translate(user_text, dest="ja").text
+            break
+        except Exception as e:
+            translator = Translator()
     example_context = reply_example_context(user_text)
     print(translated_text, example_context)
     line_bot_api.reply_message(
