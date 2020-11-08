@@ -58,10 +58,10 @@ def handle_message(event):
 
 def reply_example_context(event_token, word):
     # twitterから英単語の使用例をピックアップ
-    CK = 'PeiYuO3tpGyuufkhrmYTk64DL' # コンシューマーキー
-    CKS = 'fNCxf1l4czFfRfwTSaflPXHPn77VnvqfQFuvEJoiYUTq8ohCKx' # コンシューマーシークレット
-    AT = '1545825608-PSzllmzEUVMbSGBJHeerMxGKx3w6YeI2j6MsRSw' # アクセストークン
-    ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
+    CK = '' # コンシューマーキー
+    CKS = '' # コンシューマーシークレット
+    AT = '' # アクセストークン
+    ATS = '' # アクセストークンシークレット
     count = 1
     n = 1
     tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
