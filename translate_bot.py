@@ -61,9 +61,6 @@ if __name__ == "__main__":
 
 
 """
-heroku config:set YOUR_CHANNEL_SECRET="912d09c8e56a29388bfd2f8ca723ee88" --app translater-bot-202011
-heroku config:set YOUR_CHANNEL_ACCESS_TOKEN="hFwz/Zpm4dPitmEGiQEe6067phDjC4i9u3hBvsHwFk/TLSZ5C9Hygj4E8ZL1I+P+pchR2KFUUwOvTu+kK2e+BlWeLT72/+wPjZ5q5LMiOmJQ4gtxRrGncEqcuL0ZovOdJugzDvXGPqj/8/aj5FsVhwdB04t89/1O/w1cDnyilFU=" --app translater-bot-202011
-
 git init
 git add requirements.txt translate_bot.py runtime.txt Procfile
 git commit -m "first commit"
