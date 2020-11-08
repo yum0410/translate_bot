@@ -12,7 +12,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 )
 
-# from search_tweets import search_tweets
+from search_tweets import search_tweets
 
 app = Flask(__name__)
 translator = Translator()
@@ -56,24 +56,24 @@ def handle_message(event):
         TextSendMessage(text=translated_text))
     # reply_example_context(event.reply_token, user_text)
 
-# def reply_example_context(event_token, word):
-#     # twitterから英単語の使用例をピックアップ
-#     CK = 'PeiYuO3tpGyuufkhrmYTk64DL' # コンシューマーキー
-#     CKS = 'fNCxf1l4czFfRfwTSaflPXHPn77VnvqfQFuvEJoiYUTq8ohCKx' # コンシューマーシークレット
-#     AT = '1545825608-PSzllmzEUVMbSGBJHeerMxGKx3w6YeI2j6MsRSw' # アクセストークン
-#     ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
-#     count = 1
-#     n = 1
-#     tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
-#     example_context = tweets[0]["text"]
-#     line_bot_api.reply_message(
-#         event_token,
-#         TextSendMessage(text=example_context))
-#     # 画像がある場合は画像もリプライ
-#     if len(tweets[0]["image"]) > 0:
-#         line_bot_api.reply_message(
-#             event_token,
-#             ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
+def reply_example_context(event_token, word):
+    # twitterから英単語の使用例をピックアップ
+    CK = 'PeiYuO3tpGyuufkhrmYTk64DL' # コンシューマーキー
+    CKS = 'fNCxf1l4czFfRfwTSaflPXHPn77VnvqfQFuvEJoiYUTq8ohCKx' # コンシューマーシークレット
+    AT = '1545825608-PSzllmzEUVMbSGBJHeerMxGKx3w6YeI2j6MsRSw' # アクセストークン
+    ATS = 'ojDrCFhSwiB4EqDSG8p4PY5OPZNHapmoUH9jQH5h0LMfa' # アクセストークンシークレット
+    count = 1
+    n = 1
+    tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
+    example_context = tweets[0]["text"]
+    line_bot_api.reply_message(
+        event_token,
+        TextSendMessage(text=example_context))
+    # 画像がある場合は画像もリプライ
+    if len(tweets[0]["image"]) > 0:
+        line_bot_api.reply_message(
+            event_token,
+            ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
 
 if __name__ == "__main__":
 #    app.run()
