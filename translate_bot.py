@@ -54,7 +54,7 @@ def reply_example_context(word):
         word += ' exclude:retweets' # RTは除く
         word = urllib.parse.quote_plus(word)
         # リクエスト
-        url = "https://api.twitter.com/1.1/search/tweets.json?lang=ja&q="+word+"&count="+str(count)
+        url = "https://api.twitter.com/1.1/search/tweets.json?lang=en&q="+word+"&count="+str(count)
         auth = OAuth1(CK, CKS, AT, ATS)
         response = requests.get(url, auth=auth)
         data = response.json()['statuses']
