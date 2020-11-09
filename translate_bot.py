@@ -103,14 +103,7 @@ def reply_example_context(word):
     tweets = search_tweets(CK, CKS, AT, ATS, word, count, n)
     example_context = tweets[0]["text"]
     return example_context
-    # line_bot_api.reply_message(
-    #     event_token,
-    #     TextSendMessage(text=example_context))
-    # # 画像がある場合は画像もリプライ
-    # if len(tweets[0]["image"]) > 0:
-    #     line_bot_api.reply_message(
-    #         event_token,
-    #         ImageSendMessage(original_content_url=tweets[0]["image"][0], preview_image_url=tweets[0]["image"][0]))
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
